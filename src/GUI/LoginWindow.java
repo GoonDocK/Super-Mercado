@@ -1,0 +1,111 @@
+package GUI;
+import AssetsHandler.IconScalling;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LoginWindow extends JFrame{
+    private JTextField Cedula;
+    private static JPasswordField Contrasena;
+    protected static final Font SourceSansPro18 = new Font("Source Sans Pro",Font.PLAIN,18);
+    protected static final Font SourceSansPro25 = new Font("Source Sans Pro",Font.BOLD,25);
+    private static JCheckBox Mostrar;
+    protected static final Color Azul=new Color(0x1387DC);
+    public LoginWindow(){
+        //Configuración básica de la ventana
+        setTitle("Iniciar Sesión");
+        setSize(500,400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        try{
+            setIconImage(IconScalling.scale("/Assets/Iconos/5465865.png",64,64).getImage());
+        }catch(NullPointerException e){
+            System.out.println("No se pudo cargar el icono");
+        }
+        setLayout(new BorderLayout());
+
+        //Panel Superior
+
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelSuperior.setBackground(Color.WHITE);
+        panelSuperior.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+
+        JLabel Iniciar= new JLabel("Iniciar Sesión");
+        Iniciar.setFont(SourceSansPro25);
+        panelSuperior.add(Iniciar);
+
+        add(panelSuperior,BorderLayout.NORTH);
+
+        //Panel Central
+        JPanel panelCentral = new JPanel(new GridLayout(4,2,20,20));
+        panelCentral.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        panelCentral.setBackground(Color.WHITE);
+
+        JLabel CedulaLabel = new JLabel("Cédula:");
+        CedulaLabel.setFont(SourceSansPro18);
+        panelCentral.add(CedulaLabel);
+
+        Cedula = new JTextField();
+        Cedula.setFont(SourceSansPro18);
+        panelCentral.add(Cedula);
+
+        JLabel ContraLabel= new JLabel("Contraseña: ");
+        ContraLabel.setFont(SourceSansPro18);
+        panelCentral.add(ContraLabel);
+
+        Contrasena = new JPasswordField();
+        Contrasena.setFont(SourceSansPro18);
+        panelCentral.add(Contrasena);
+
+        JButton Ingresar = new JButton("Ingresar");
+        Ingresar.setIcon(IconScalling.scale("/Assets/Iconos/59802.png",30,30));
+        Ingresar.setBackground(Azul);
+        Ingresar.setForeground(Color.WHITE);
+        Ingresar.setFont(SourceSansPro18);
+        panelCentral.add(Ingresar);
+
+        JButton Registrar = new JButton("Registrarse");
+        Registrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                new signInWindow();
+                dispose();
+            }
+        });
+        Registrar.setIcon(IconScalling.scale("/Assets/Iconos/304579.png",30,30));
+        Registrar.setBackground(Azul);
+        Registrar.setForeground(Color.WHITE);
+        Registrar.setFont(SourceSansPro18);
+        panelCentral.add(Registrar);
+
+        Mostrar = new JCheckBox("Mostrar contraseña");
+        Mostrar.setFont(SourceSansPro18);
+        Mostrar.setBackground(Color.WHITE);
+        panelCentral.add(Mostrar);
+        char echo=Contrasena.getEchoChar();
+        Mostrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MostrarContrasena(echo);
+            }
+        });
+
+
+
+        add(panelCentral,BorderLayout.CENTER);
+
+        //Visualizacion de la ventana
+        setVisible(true);
+    }
+    //Metodo para mostrar/Ocultar la contraseña
+    private static void MostrarContrasena(char echo){
+        if(Mostrar.isSelected()){
+            Contrasena.setEchoChar((char)0);
+        }else{
+            Contrasena.setEchoChar(echo);
+        }
+    }
+}
