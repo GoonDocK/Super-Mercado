@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import FuenteYTipografia.*;
 
 public class signInWindow extends JFrame{
     private JTextField Nombre, Apellido, Cedula;
@@ -30,12 +31,12 @@ public class signInWindow extends JFrame{
         //Panel Superior
 
         JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelSuperior.setBackground(LoginWindow.Azul);
+        panelSuperior.setBackground(Colores.Azul);
         panelSuperior.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         JLabel Labelinciar= new JLabel("Crear Usuario");
         Labelinciar.setForeground(Color.WHITE);
-        Labelinciar.setFont(LoginWindow.SourceSansPro18);
+        Labelinciar.setFont(Fuentes.SourceSansPro18);
         panelSuperior.add(Labelinciar);
 
         add(panelSuperior,BorderLayout.NORTH);
@@ -47,43 +48,43 @@ public class signInWindow extends JFrame{
         panelCentral.setBackground(Color.WHITE);
 
         JLabel NombreLabel= new JLabel("Nombre: ");
-        NombreLabel.setFont(LoginWindow.SourceSansPro18);
+        NombreLabel.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(NombreLabel);
 
         Nombre = new JTextField();
-        Nombre.setFont(LoginWindow.SourceSansPro18);
+        Nombre.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(Nombre);
 
         JLabel ApellidoLabel= new JLabel("Apellido: ");
-        ApellidoLabel.setFont(LoginWindow.SourceSansPro18);
+        ApellidoLabel.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(ApellidoLabel);
 
         Apellido = new JTextField();
-        Apellido.setFont(LoginWindow.SourceSansPro18);
+        Apellido.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(Apellido);
 
         JLabel LabelCedula = new JLabel("Cédula: ");
-        LabelCedula.setFont(LoginWindow.SourceSansPro18);
+        LabelCedula.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(LabelCedula);
 
         Cedula = new JTextField();
-        Cedula.setFont(LoginWindow.SourceSansPro18);
+        Cedula.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(Cedula);
 
         JLabel contrasena= new JLabel("Contraseña: ");
-        contrasena.setFont(LoginWindow.SourceSansPro18);
+        contrasena.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(contrasena);
 
         Contrasena = new JPasswordField();
-        Contrasena.setFont(LoginWindow.SourceSansPro18);
+        Contrasena.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(Contrasena);
 
         JLabel repetirContrasena= new JLabel("Confirmar contraseña:");
-        repetirContrasena.setFont(LoginWindow.SourceSansPro18);
+        repetirContrasena.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(repetirContrasena);
 
         RepetirContrasena = new JPasswordField();
-        RepetirContrasena.setFont(LoginWindow.SourceSansPro18);
+        RepetirContrasena.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(RepetirContrasena);
 
         JButton Ingresar = new JButton("Ingresar");
@@ -103,9 +104,9 @@ public class signInWindow extends JFrame{
             }
         });
         Ingresar.setIcon(IconScalling.scale("/Assets/Iconos/flechaverde.png",30,30));
-        Ingresar.setBackground(LoginWindow.Azul);
+        Ingresar.setBackground(Colores.Azul);
         Ingresar.setForeground(Color.WHITE);
-        Ingresar.setFont(LoginWindow.SourceSansPro18);
+        Ingresar.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(Ingresar);
 
         JButton Cancelar = new JButton("Cancelar");
@@ -117,9 +118,9 @@ public class signInWindow extends JFrame{
             }
         });
         Cancelar.setIcon(IconScalling.scale("/Assets/Iconos/Salida.png",30,30));
-        Cancelar.setBackground(LoginWindow.Azul);
+        Cancelar.setBackground(Colores.Azul);
         Cancelar.setForeground(Color.WHITE);
-        Cancelar.setFont(LoginWindow.SourceSansPro18);
+        Cancelar.setFont(Fuentes.SourceSansPro18);
         panelCentral.add(Cancelar);
 
         mostrarContra= new JCheckBox("Mostrar Contraseña");
@@ -130,7 +131,7 @@ public class signInWindow extends JFrame{
                 MostrarContrasena(echo);
             }
         });
-        mostrarContra.setFont(LoginWindow.SourceSansPro18);
+        mostrarContra.setFont(Fuentes.SourceSansPro18);
         mostrarContra.setBackground(Color.WHITE);
         panelCentral.add(mostrarContra);
 
@@ -139,7 +140,7 @@ public class signInWindow extends JFrame{
         Texto.setOpaque(false);
         Texto.setLineWrap(true);
         Texto.setWrapStyleWord(true);
-        Texto.setFont(LoginWindow.SourceSansPro18);
+        Texto.setFont(Fuentes.SourceSansPro18);
         Texto.setForeground(Color.RED);
         panelCentral.add(Texto);
 
