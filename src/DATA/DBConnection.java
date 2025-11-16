@@ -12,7 +12,7 @@ public class DBConnection {
             Connection conexion=DriverManager.getConnection(URL,USER,PASSWORD);
             return conexion;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "No se pudo conectar con la base de datos");
+            JOptionPane.showMessageDialog(null, "No se pudo conectar con la base de datos: "+e.getMessage());
             return null;
         }
     }

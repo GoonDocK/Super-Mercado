@@ -1,5 +1,6 @@
 package GUI;
 import AssetsHandler.IconScalling;
+import DATA.Insert;
 import DATATYPES.Usuario;
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ public class signInWindow extends JFrame{
     private static JPasswordField Contrasena, RepetirContrasena;
     private static JCheckBox mostrarContra;
     private JTextArea Texto;
+    private  Usuario usuario;
     public signInWindow() {
         setTitle("Crear Usuario");
         setSize(500,550);
@@ -28,10 +30,11 @@ public class signInWindow extends JFrame{
         //Panel Superior
 
         JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelSuperior.setBackground(Color.WHITE);
+        panelSuperior.setBackground(LoginWindow.Azul);
         panelSuperior.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         JLabel Labelinciar= new JLabel("Crear Usuario");
+        Labelinciar.setForeground(Color.WHITE);
         Labelinciar.setFont(LoginWindow.SourceSansPro18);
         panelSuperior.add(Labelinciar);
 
@@ -87,7 +90,16 @@ public class signInWindow extends JFrame{
         Ingresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                verificarCampos();
+                if(verificarCampos()){
+                    Insert newInsert = new Insert();
+                    if (Insert.usuario(usuario)) {
+                        SwingUtilities.invokeLater(LoginWindow::new);
+                        dispose();
+                    }else{
+                        Texto.setText("El usuario ya existe");
+                    }
+
+                }
             }
         });
         Ingresar.setIcon(IconScalling.scale("/Assets/Iconos/flechaverde.png",30,30));
@@ -100,7 +112,7 @@ public class signInWindow extends JFrame{
         Cancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                new LoginWindow();
+                SwingUtilities.invokeLater(LoginWindow::new);
                 dispose();
             }
         });
@@ -143,21 +155,30 @@ public class signInWindow extends JFrame{
             RepetirContrasena.setEchoChar(echo);
         }
     }
-    private void verificarCampos(){
+    private boolean verificarCampos(){
         if(!Nombre.getText().isBlank() && !Apellido.getText().isBlank() && !Cedula.getText().isBlank() && !Contrasena.getText().isBlank() && !RepetirContrasena.getText().isBlank()){
             Texto.setText(null);
             if(Arrays.equals(Contrasena.getPassword(), RepetirContrasena.getPassword())){
                 if(verificarLonContra(Contrasena.getText())){
-                    Usuario usuario = new Usuario(Nombre.getText(),Apellido.getText(),Cedula.getText(),Contrasena.getText());
+                    try{
+                        usuario = new Usuario(Double.parseDouble(Cedula.getText()),Nombre.getText(),Apellido.getText(),Contrasena.getText());
+                        return true;
+                    }catch(NumberFormatException e){
+                        Texto.setText("Su ID debe ser un número");
+                        return false;
+                    }
                 }
                 else{
                     Texto.setText("La contraseña debe tener al menos 8 caracteres");
+                    return false;
                 }
             }else{
                 Texto.setText("Las contraseñas no coinciden");
+                return false;
             }
         }else{
             Texto.setText("Por favor complete todos los campos");
+            return false;
         }
     }
     private boolean verificarLonContra(String contra){

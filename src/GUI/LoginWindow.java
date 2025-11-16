@@ -1,11 +1,11 @@
 package GUI;
 import AssetsHandler.IconScalling;
-
+import DATA.locate;
+import DATATYPES.Usuario;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 public class LoginWindow extends JFrame{
     private JTextField Cedula;
     private static JPasswordField Contrasena;
@@ -61,6 +61,14 @@ public class LoginWindow extends JFrame{
         panelCentral.add(Contrasena);
 
         JButton Ingresar = new JButton("Ingresar");
+        Ingresar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(verificarCampos()){
+                    validarUsuario(locate.User(Double.parseDouble(Cedula.getText()),Contrasena.getText()));
+                }
+            }
+        });
         Ingresar.setIcon(IconScalling.scale("/Assets/Iconos/59802.png",30,30));
         Ingresar.setBackground(Azul);
         Ingresar.setForeground(Color.WHITE);
@@ -71,7 +79,7 @@ public class LoginWindow extends JFrame{
         Registrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                new signInWindow();
+                SwingUtilities.invokeLater(signInWindow::new);
                 dispose();
             }
         });
@@ -93,8 +101,6 @@ public class LoginWindow extends JFrame{
             }
         });
 
-
-
         add(panelCentral,BorderLayout.CENTER);
 
         //Visualizacion de la ventana
@@ -106,6 +112,27 @@ public class LoginWindow extends JFrame{
             Contrasena.setEchoChar((char)0);
         }else{
             Contrasena.setEchoChar(echo);
+        }
+    }
+    private boolean verificarCampos(){
+        try{
+            double cedula = Double.parseDouble(Cedula.getText());
+            if(!Cedula.getText().isBlank() && !Contrasena.getText().isBlank()){
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null,"Por favor complete todos los campos");
+                return false;
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null,"Por favor digite un número de cedula válido");
+            return false;
+        }
+    }
+    private void validarUsuario(Usuario user){
+        if(user!=null){
+
+        }else{
+            JOptionPane.showMessageDialog(getContentPane(),"Usuario o contraseña incorrectos");
         }
     }
 }

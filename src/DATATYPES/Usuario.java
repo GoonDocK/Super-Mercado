@@ -1,17 +1,17 @@
 package DATATYPES;
 import org.mindrot.jbcrypt.BCrypt;
 public class Usuario {
-    private String cedula;
+    private double cedula;
     private String nombre;
     private String apellido;
     private String password;
-    public Usuario(String cedula, String nombre, String apellido, String password){
+    public Usuario(double cedula, String nombre, String apellido, String password){
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
-    public String getCedula() {
+    public double getCedula() {
         return cedula;
     }
     public String getNombre() {
