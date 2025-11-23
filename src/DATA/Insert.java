@@ -1,5 +1,5 @@
 package DATA;
-import DATATYPES.Usuario;
+import DATATYPES.*;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +24,24 @@ public class Insert {
         }
         return false;
     }
+    public static boolean Producto(Producto producto){
+        Connection conexion=DBConnection.Conectar();
+        if(conexion!=null){
+            try(conexion){
+                String sql="INSERT INTO productos (id,nombre,precio) VALUES(?,?,?)";
+                PreparedStatement ps=conexion.prepareStatement(sql);
+                ps.setLong(1,producto.getId());
+                ps.setString(2,producto.getNombre());
+                ps.setDouble(3,producto.getPrecio());
+                ps.executeUpdate();
+                return true;
+            }catch (SQLException e){
+                return false;
+            }
+        }
+        return false;
+    }
+
 
 
 }

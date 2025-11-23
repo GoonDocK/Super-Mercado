@@ -1,10 +1,13 @@
 import DATA.DBConnection;
+import DATATYPES.Usuario;
 import GUI.LoginWindow;
+import GUI.MainWindow.Window;
+
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 public class Main {
-    public static void main(String[] args){
+    public static void mai3n(String[] args){
         Connection conexion= DBConnection.Conectar();
         try(conexion){
             if(conexion!=null){
@@ -19,5 +22,9 @@ public class Main {
                 System.exit(0);
             }
         }
+    }
+    public static void main(String[] args) {
+        Usuario user=new Usuario(0,"Admin","123","Administrador");
+        SwingUtilities.invokeLater(()->new Window(user));
     }
 }

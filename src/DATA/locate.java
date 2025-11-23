@@ -1,4 +1,5 @@
 package DATA;
+import DATATYPES.Producto;
 import DATATYPES.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
 import javax.swing.*;
@@ -27,6 +28,27 @@ public class locate {
                 return null;
             }
         }
+    public static Producto Producto(double id) {
+        String sql = "SELECT id, nombre, precio FROM usuarios WHERE id=?";
+        try (Connection conexion = DBConnection.Conectar(); PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setDouble(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                if (rs.getLong("id") == id) {
+                    return new Producto(rs.getLong("id"), rs.getString("nombre"), rs.getDouble("precio"));
+                } else {
+                    return null;
+                }
+
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (Exception e){
+        return null;
+        }
+    }
 
 }
 
