@@ -3,14 +3,18 @@ import AssetsHandler.IconScalling;
 import DATATYPES.Usuario;
 import FuenteYTipografia.*;
 import GUI.LoginWindow;
+import GUI.MainWindow.BarcodeRead.BarcodeReader;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class Window extends JFrame{
     private CardLayout centro;
+    protected Boolean Ventas=false;
     private JPanel panelCentral;
+    private panelVentas PanelVentas;
+    private panelRegistrar PanelRegistro;
+    private BarcodeReader bcr=new BarcodeReader();
     public Window(Usuario user){
         setTitle("Ventas");
         setSize(800,650);
@@ -75,6 +79,7 @@ public class Window extends JFrame{
         abrirVentas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                bcr.start();
                 iniciarVentas();
             }
         });
@@ -95,6 +100,12 @@ public class Window extends JFrame{
         Ventas.setForeground(Color.WHITE);
         Ventas.setMaximumSize(new Dimension(500,50));
         Ventas.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Ventas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                verVentas();
+            }
+        });
         panelInicio.add(Ventas);
 
         panelInicio.add(Box.createRigidArea(new Dimension(0,20)));
@@ -109,6 +120,7 @@ public class Window extends JFrame{
         Registrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                bcr.start();
                 iniciarRegistro();
             }
         });
@@ -149,7 +161,7 @@ public class Window extends JFrame{
         info.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                JOptionPane.showMessageDialog(getContentPane(), "Programa desarrollado por: David Alejandro Garcia Monguí \n Universidad Industrial de Santander \n Source Code: https://github.com/GoonDocK/Super-Mercado \n Versión: Alpha 2025.11.1 ");
+                JOptionPane.showMessageDialog(getContentPane(), "Programa desarrollado por: David Alejandro Garcia Monguí \n Universidad Industrial de Santander \n Source Code: https://github.com/GoonDocK/Super-Mercado \n Versión: Alpha 2025.11.25 ");
             }
         });
 
@@ -157,25 +169,32 @@ public class Window extends JFrame{
         panelCentral.add(panelInicio,"Inicio");
         centro.show(panelCentral,"Inicio");
 
-        //Inciar Ventas
-        JPanel panelVentas = new panelVentas(this);
-        panelCentral.add(panelVentas,"Ventas");
 
-        JPanel panelRegistro= new panelRegistrar(this);
-        panelCentral.add(panelRegistro,"Registro");
+        //Inciar Ventas
+        PanelVentas = new panelVentas(this);
+        panelCentral.add(PanelVentas,"Ventas");
+
+
+        PanelRegistro= new panelRegistrar(this, bcr);
+        panelCentral.add(PanelRegistro,"Registro");
+
+        JPanel panelVerVentas= new panelVerVentas(this);
+        panelCentral.add(panelVerVentas,"Ver Ventas");
 
         add(panelCentral,BorderLayout.CENTER);
         add(panelSuperior,BorderLayout.NORTH);
 
         setVisible(true);
 
-
     }
     public void iniciarVentas(){
+        PanelVentas.setListener(bcr);
         setSize(900,650);
         centro.show(panelCentral,"Ventas");
+        Ventas=true;
     }
     public void iniciarRegistro(){
+        PanelRegistro.setListener(bcr);
         setSize(900,650);
         centro.show(panelCentral,"Registro");
     }
@@ -183,6 +202,9 @@ public class Window extends JFrame{
     public void volverInicio(){
         setSize(800,650);
         centro.show(panelCentral,"Inicio");
+    }
+    public void verVentas(){
+        centro.show(panelCentral,"Ver Ventas");
     }
 
 

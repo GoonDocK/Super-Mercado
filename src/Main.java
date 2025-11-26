@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 public class Main {
-    public static void mai3n(String[] args){
+    public static void main1(String[] args){
         Connection conexion= DBConnection.Conectar();
         try(conexion){
             if(conexion!=null){

@@ -8,9 +8,9 @@ public class BarcodeProcess {
         Producto producto=locate.Producto(code);
         if(producto==null){
             InsertDB(item);
-            return false;
-        }else{
             return true;
+        }else{
+            return false;
         }
     }
     private static void InsertDB(Producto item){

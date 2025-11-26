@@ -5,14 +5,21 @@ public class BarcodeReader {
     private final StringBuilder buffer=new StringBuilder();
     private String codigo;
     private BarcodeListener listener;
+    private KeyEventDispatcher dispatcher;
     public void start() {
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this::dispatchKeyEvent);
+       if(dispatcher==null){
+           dispatcher=this::dispatchKeyEvent;
+           KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(dispatcher);
+       }
     }
     public void setListener(BarcodeListener listener) {
         this.listener = listener;
     }
     public void stop() {
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this::dispatchKeyEvent);
+        if(dispatcher!=null){
+            KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(dispatcher);
+            dispatcher=null;
+        }
     }
     private boolean dispatchKeyEvent(KeyEvent e){
         if(e.getID()==KeyEvent.KEY_PRESSED){
@@ -33,7 +40,8 @@ public class BarcodeReader {
         }
         return false;
     }
-    private void setString(String codigo){
-        this.codigo=codigo;
+    public void limpiar(){
+        buffer.setLength(0);
     }
+
 }

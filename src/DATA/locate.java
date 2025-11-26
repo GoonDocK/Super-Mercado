@@ -29,7 +29,7 @@ public class locate {
             }
         }
     public static Producto Producto(double id) {
-        String sql = "SELECT id, nombre, precio FROM usuarios WHERE id=?";
+        String sql = "SELECT id, nombre, precio FROM productos WHERE id=?";
         try (Connection conexion = DBConnection.Conectar(); PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setDouble(1, id);
             try (ResultSet rs = ps.executeQuery()) {

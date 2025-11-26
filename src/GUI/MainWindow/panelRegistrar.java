@@ -13,7 +13,7 @@ public class panelRegistrar extends JPanel {
     private boolean LCDBActive=true;
     private JTextField CodigoTextField, Precio, Nombre;
     private JButton desactivar;
-    public panelRegistrar(Window ventanaPrincipal){
+    public panelRegistrar(Window ventanaPrincipal, BarcodeReader bcr){
         setLayout(new BorderLayout());
         JPanel panelCentro=new JPanel();
         panelCentro.setLayout(new GridBagLayout());
@@ -96,9 +96,7 @@ public class panelRegistrar extends JPanel {
         CodigoTextField= new JTextField();
         CodigoTextField.setFont(Fuentes.SourceSansPro18);
         CodigoTextField.setEditable(false);
-        BarcodeReader bcr=new BarcodeReader();
-        bcr.setListener(code -> {CodigoTextField.setText(code);});
-        bcr.start();
+
         panelCentro.add(CodigoTextField, gbc);
 
         gbc.gridx=0;
@@ -133,7 +131,7 @@ public class panelRegistrar extends JPanel {
         registrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                comprobarDatos();
+                comprobarDatos(bcr);
             }
         });
         panelBotones.add(registrar);
@@ -160,6 +158,9 @@ public class panelRegistrar extends JPanel {
         atras.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                if(LCDBActive){
+                    bcr.stop();
+                }
                 ventanaPrincipal.volverInicio();
             }
         });
@@ -184,7 +185,7 @@ public class panelRegistrar extends JPanel {
         add(panelinfo,BorderLayout.WEST);
 
     }
-    private void comprobarDatos(){
+    private void comprobarDatos(BarcodeReader bcr){
         try{
             Producto producto= new Producto();
             if(Nombre.getText().isBlank() || Precio.getText().isBlank() || CodigoTextField.getText().isBlank()){
@@ -209,6 +210,7 @@ public class panelRegistrar extends JPanel {
                     Nombre.setText(null);
                     Precio.setText(null);
                     JOptionPane.showMessageDialog(null,"Producto registrado correctamente");
+                    bcr.limpiar();
                 }
             }
 
@@ -230,5 +232,8 @@ public class panelRegistrar extends JPanel {
             reader.start();
             desactivar.setText("Desactivar LCDB");
         }
+    }
+    public void setListener(BarcodeReader bcr){
+        bcr.setListener(code -> {CodigoTextField.setText(code);});
     }
 }
