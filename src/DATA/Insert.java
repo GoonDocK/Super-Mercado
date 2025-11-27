@@ -1,5 +1,7 @@
 package DATA;
 import DATATYPES.*;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +35,25 @@ public class Insert {
                 ps.setLong(1,producto.getId());
                 ps.setString(2,producto.getNombre());
                 ps.setDouble(3,producto.getPrecio());
+                ps.executeUpdate();
+                return true;
+            }catch (SQLException e){
+                return false;
+            }
+        }
+        return false;
+    }
+    public static boolean Venta(Ventas venta){
+        Connection conexion=DBConnection.Conectar();
+        if(conexion!=null){
+            try(conexion){
+                String sql="INSERT INTO ventas(cajero,fecha,cantidad,total,tipodepago) VALUES(?,?,?,?,?)";
+                PreparedStatement ps=conexion.prepareStatement(sql);
+                ps.setString(1, venta.getCajero());
+                ps.setDate(2, Date.valueOf(venta.getFecha()));
+                ps.setInt(3,venta.getCantidad());
+                ps.setDouble(4,venta.getTotal());
+                ps.setString(5,venta.getTipoDePago());
                 ps.executeUpdate();
                 return true;
             }catch (SQLException e){

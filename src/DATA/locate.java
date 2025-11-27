@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class locate {
     public static Usuario User(double Cedula, String password){
         String sql="SELECT id, nombre, apellido, passwordhash FROM usuarios WHERE id=?";
@@ -47,6 +49,19 @@ public class locate {
             }
         } catch (Exception e){
         return null;
+        }
+    }
+    public static ArrayList<Object[]> ventas(){
+        String sql="SELECT * FROM ventas";
+        try(Connection conexion=DBConnection.Conectar(); PreparedStatement ps=conexion.prepareStatement(sql)){
+            ResultSet rs=ps.executeQuery();
+            ArrayList<Object[]> lista=new ArrayList<>();
+            while(rs.next()){
+                lista.add(new Object[]{rs.getLong(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getDouble(5)});
+            }
+            return lista;
+        }catch(SQLException e){
+            return null;
         }
     }
 

@@ -161,7 +161,7 @@ public class Window extends JFrame{
         info.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                JOptionPane.showMessageDialog(getContentPane(), "Programa desarrollado por: David Alejandro Garcia Monguí \n Universidad Industrial de Santander \n Source Code: https://github.com/GoonDocK/Super-Mercado \n Versión: Alpha 2025.11.25 ");
+                JOptionPane.showMessageDialog(getContentPane(), "Programa desarrollado por: David Alejandro Garcia Monguí \n Universidad Industrial de Santander \n Source Code: https://github.com/GoonDocK/Super-Mercado \n Versión: Alpha 2025.11.26 ");
             }
         });
 
@@ -171,7 +171,7 @@ public class Window extends JFrame{
 
 
         //Inciar Ventas
-        PanelVentas = new panelVentas(this);
+        PanelVentas = new panelVentas(this,user, bcr);
         panelCentral.add(PanelVentas,"Ventas");
 
 

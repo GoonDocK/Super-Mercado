@@ -1,5 +1,6 @@
 package GUI.MainWindow;
 import AssetsHandler.IconScalling;
+import DATA.locate;
 import FuenteYTipografia.Colores;
 import FuenteYTipografia.Fuentes;
 import javax.swing.*;
@@ -7,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 public class panelVerVentas extends JPanel {
     private DefaultTableModel modelo;
     private JTable tablaVentas;
@@ -18,10 +21,12 @@ public class panelVerVentas extends JPanel {
         modelo = new DefaultTableModel();
         tablaVentas = new JTable(modelo);
 
+        modelo.addColumn("ID");
         modelo.addColumn("Cajero");
         modelo.addColumn("Fecha y hora de venta");
-        modelo.addColumn("Total");
         modelo.addColumn("Cantidad de productos vendidos");
+        modelo.addColumn("Total");
+
 
         JScrollPane panelTabla= new JScrollPane(tablaVentas);
 
@@ -42,6 +47,19 @@ public class panelVerVentas extends JPanel {
                 ventana.volverInicio();
             }
         });
+
+        JButton actualizar = new JButton("Actualizar");
+        actualizar.setBackground(Colores.Azul);
+        actualizar.setForeground(Color.WHITE);
+        actualizar.setFont(Fuentes.SourceSansPro18);
+        actualizar.setIcon(IconScalling.scale("/Assets/Iconos/Actualizar.png",30,30));
+        actualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                actualizarTabla();
+            }
+        });
+        panelBotones.add(actualizar);
         panelBotones.add(regresar);
 
 
@@ -50,5 +68,16 @@ public class panelVerVentas extends JPanel {
 
 
 
+    }
+    private void actualizarTabla(){
+        modelo.setRowCount(0);
+        try{
+            ArrayList<Object[]> lista=locate.ventas();
+            for(Object[] row: lista){
+                modelo.addRow(row);
+            }
+        }catch (NullPointerException e){
+            JOptionPane.showMessageDialog(null,"No se encontró el registro");
+        }
     }
 }

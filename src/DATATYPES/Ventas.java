@@ -1,51 +1,48 @@
 package DATATYPES;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
+import java.time.LocalDate;
 public class Ventas {
     private String cajero;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private double total;
-    private ArrayList<Producto> productos;
-    private long id;
+    private int cantidad;
+    private String tipoDePago;
     public Ventas(){}
-    public Ventas(String cajero, LocalDateTime fecha, double total, ArrayList<Producto> productos, long id){
+    public Ventas(String cajero, double total, int cantidad, String tipoDePago){
         this.cajero = cajero;
-        this.id = id;
-        this.fecha = fecha;
         this.total = total;
-        this.productos = productos;
-        this.fecha = LocalDateTime.now();
+        this.fecha = LocalDate.now();
+        this.cantidad = cantidad;
+        this.tipoDePago = tipoDePago;
     }
     public String getCajero() {
         return cajero;
     }
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
     public double getTotal() {
         return total;
     }
-    public ArrayList<Producto> getProductos() {
-        return productos;
-    }
     public void setCajero(String cajero) {
         this.cajero = cajero;
     }
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
     public void setTotal(double total) {
         this.total = total;
     }
-    public void setProductos(ArrayList<Producto> productos) {
-        this.productos = productos;
+    public int getCantidad() {
+        return cantidad;
     }
-    public long getId() {
-        return id;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
-    public void setId(long id) {
-        this.id = id;
+    public String getTipoDePago() {
+        return tipoDePago;
+    }
+    public void setTipoDePago(String tipoDePago) {
+        this.tipoDePago = tipoDePago;
     }
 
 }
